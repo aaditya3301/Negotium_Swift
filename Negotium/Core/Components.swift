@@ -1,16 +1,17 @@
+
 import SwiftUI
 
-// 1. The Glassmorphic Background Modifier
+// Refined Glassmorphism: Smoother border, better shadow
 struct GlassModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(.ultraThinMaterial)
             .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(.white.opacity(0.1), lineWidth: 1)
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(.white.opacity(0.08), lineWidth: 1)
             )
-            .cornerRadius(20)
-            .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .shadow(color: .black.opacity(0.25), radius: 10, x: 0, y: 5)
     }
 }
 
@@ -20,7 +21,7 @@ extension View {
     }
 }
 
-// 2. Gradient Primary Button
+// Refined Button: Better typography and haptic feel
 struct PrimaryButton: View {
     let title: String
     let icon: String?
@@ -28,25 +29,25 @@ struct PrimaryButton: View {
     
     var body: some View {
         Button(action: action) {
-            HStack {
-                if let icon = icon { Image(systemName: icon) }
-                Text(title).fontWeight(.bold)
+            HStack(spacing: 8) {
+                if let icon = icon { Image(systemName: icon).font(.headline) }
+                Text(title).font(.headline).fontWeight(.semibold)
             }
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(.vertical, 16)
             .background(
-                LinearGradient(colors: [Theme.purple, Theme.teal], startPoint: .leading, endPoint: .trailing)
+                LinearGradient(colors: [Theme.purple, Theme.teal], startPoint: .topLeading, endPoint: .bottomTrailing)
             )
             .foregroundColor(.white)
-            .cornerRadius(12)
-            .shadow(color: Theme.teal.opacity(0.4), radius: 8, x: 0, y: 4)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .shadow(color: Theme.teal.opacity(0.3), radius: 10, x: 0, y: 5)
+            .contentShape(Rectangle())
         }
     }
 }
 
-// 3. Simple Progress Bar
 struct CustomProgressBar: View {
-    var value: Double // 0.0 to 1.0
+    var value: Double
     var color: Color
     
     var body: some View {
@@ -55,8 +56,8 @@ struct CustomProgressBar: View {
                 Capsule().fill(Color.white.opacity(0.1))
                 Capsule()
                     .fill(color)
-                    .frame(width: geometry.size.width * value)
-                    .animation(.spring(), value: value)
+                    .frame(width: max(0, min(geometry.size.width * value, geometry.size.width)))
+                    .animation(.spring(response: 0.5, dampingFraction: 0.7), value: value)
             }
         }
         .frame(height: 6)
