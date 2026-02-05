@@ -1,34 +1,5 @@
 import Foundation
 
-enum Difficulty: String, CaseIterable {
-    case beginner, medium, advanced, hard
-}
-
-struct Scenario: Identifiable, Hashable {
-    let id = UUID()
-    let title: String
-    let description: String
-    let icon: String
-    let duration: Int
-    let difficulty: Difficulty
-    let color: String // Hex
-}
-
-struct ChatMessage: Identifiable {
-    let id = UUID()
-    let content: String
-    let isUser: Bool
-    let timestamp: Date
-}
-
-struct AnalysisPoint: Identifiable {
-    let id = UUID()
-    let turn: Int
-    let description: String
-    let quote: String?
-}
-
-// Sample Data
 struct MockData {
     static let scenarios = [
         Scenario(title: "Annual Salary Raise", description: "Negotiate a 20% raise with your manager.", icon: "dollarsign.circle", duration: 15, difficulty: .medium, color: "14b8a6"),
@@ -44,12 +15,12 @@ struct MockData {
     ]
     
     static let strengths = [
-        AnalysisPoint(turn: 2, description: "Strong active listening", quote: "\"I understand budget is a concern...\""),
-        AnalysisPoint(turn: 5, description: "Effective framing of value", quote: "delivered 30% revenue increase")
+        AnalysisPoint(point: "Active Listening", explanation: "\"I understand budget is a concern...\" shows you are listening."),
+        AnalysisPoint(point: "Value Framing", explanation: "You successfully highlighted the 30% revenue increase.")
     ]
     
     static let mistakes = [
-        AnalysisPoint(turn: 3, description: "Anchored too low", quote: "I was hoping for maybe 5%"),
-        AnalysisPoint(turn: 7, description: "Apologized unnecessarily", quote: "Sorry to ask for this")
+        AnalysisPoint(point: "Anchoring Low", explanation: "You started with 5%, which is too low."),
+        AnalysisPoint(point: "Over-Apologizing", explanation: "Never say 'Sorry to ask' during a negotiation.")
     ]
 }
